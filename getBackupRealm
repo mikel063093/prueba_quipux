@@ -1,0 +1,2 @@
+rm -r ./realm 
+/Users/home/Library/Android/sdk/platform-tools/adb pull /data/data/quipux.com.co.testappmike/files/ ./realm

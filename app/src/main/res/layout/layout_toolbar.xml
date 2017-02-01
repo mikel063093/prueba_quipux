@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/my_awesome_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    style="@style/TranslucentActionBar"
+    >
+  <TextView
+      android:id="@+id/toolbar_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="@string/app_name"
+      android:textAllCaps="true"
+      android:textColor="@color/primary_text"
+      android:textSize="@dimen/material_app_bar_default_title_text_size"
+      style="@style/MaterialTypography.Regular.Title"
+      />
+
+</android.support.v7.widget.Toolbar>

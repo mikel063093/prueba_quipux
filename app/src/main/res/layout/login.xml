@@ -1,0 +1,90 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e3e3e3"
+    android:fillViewport="true"
+    >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="#e3e3e3"
+      android:orientation="vertical"
+      android:padding="@dimen/activity_horizontal_margin"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:orientation="vertical"
+        >
+
+      <android.support.design.widget.TextInputLayout
+          android:id="@+id/usernameWrapper"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          style="@style/MaterialTypography.Regular.Subheading"
+          >
+
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/usuario"
+            android:inputType="textEmailAddress"
+            style="@style/MaterialTypography.Regular.Body1"
+            />
+
+      </android.support.design.widget.TextInputLayout>
+
+      <android.support.design.widget.TextInputLayout
+          android:id="@+id/passwordWrapper"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/usernameWrapper"
+          android:layout_marginTop="4dp"
+          style="@style/MaterialTypography.Regular.Subheading"
+          >
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/contraseña"
+            android:inputType="textPassword"
+            style="@style/MaterialTypography.Regular.Body1"
+            />
+
+      </android.support.design.widget.TextInputLayout>
+
+      <Button
+          android:id="@+id/btn"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
+          android:background="@color/primary_dark"
+          android:text="@string/Ingresar"
+          android:textAllCaps="false"
+          android:textColor="@color/white"
+          android:textSize="@dimen/material_typography_regular_button_text_size"
+          style="@style/MaterialTypography.Regular.Button"
+          />
+
+
+    </LinearLayout>
+
+  </LinearLayout>
+</ScrollView>

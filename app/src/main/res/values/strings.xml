@@ -1,0 +1,16 @@
+<resources>
+  <string name="app_name">TestAppMike</string>
+  <string name="Ingresar">Ingresar</string>
+  <string name="correo">Correo electronico</string>
+  <string name="contraseña">Contraseña</string>
+  <string name="usuario">Usuario</string>
+  <string name="acept">Aceptar</string>
+  <string name="cancel">Cancelar</string>
+  <string name="datos_invaldiso">Datos erroneos</string>
+  <string name="title_activity_main2">Main2Activity</string>
+  <string name="fullname">Nombre</string>
+  <string name="crear">Crear</string>
+  <string name="apellido">Apellido</string>
+  <string name="fecha_nacimiento">Fecha de nacimiento</string>
+  <string name="numero_documento_identidiad">Numero documento</string>
+</resources>
