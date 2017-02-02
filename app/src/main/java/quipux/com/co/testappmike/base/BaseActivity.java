@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import quipux.com.co.testappmike.R;
+import quipux.com.co.testappmike.entity.Producto;
 import quipux.com.co.testappmike.entity.Usuario;
 import quipux.com.co.testappmike.util.UtilUsuario;
 
@@ -133,11 +134,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     final RealmResults<Usuario> result =
         realm.where(Usuario.class).equalTo("documento", upUser.getDocumento()).findAll();
     if (!result.isEmpty()) {
-      getRealm().executeTransaction(new Realm.Transaction() {
-        @Override public void execute(Realm realm) {
-          Usuario usuario = result.first();
-          usuario.deleteFromRealm();
-        }
+      getRealm().executeTransaction(realm1 -> {
+        Usuario usuario = result.first();
+        usuario.deleteFromRealm();
       });
     } else {
       log("usuario no encontrado" + upUser.toString());
@@ -353,5 +352,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   public boolean validateLength(String text, int max) {
     return text != null && text.length() <= max;
+  }
+
+  public void guardarItem(final Producto item) {
+    Realm realm = Realm.getDefaultInstance();
+    realm.executeTransaction(new Realm.Transaction() {
+      @Override public void execute(Realm realm) {
+        realm.copyToRealmOrUpdate(item);
+      }
+    });
+    realm.close();
   }
 }

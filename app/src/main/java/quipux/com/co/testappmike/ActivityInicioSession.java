@@ -34,7 +34,7 @@ public class ActivityInicioSession extends BaseActivity {
     RealmResults<Usuario> results = realm.where(Usuario.class)
         .equalTo("usuario", usuario)
         .or()
-        .equalTo("correoEletronico",usuario)
+        .equalTo("correoEletronico", usuario)
         .equalTo("contrasena", password)
         .findAll();
     if (!results.isEmpty()) {
@@ -44,6 +44,7 @@ public class ActivityInicioSession extends BaseActivity {
         goActv(ActivityAdmin.class, true);
       } else {
         Toast.makeText(this, "Usuario: " + user.getNombre(), Toast.LENGTH_SHORT).show();
+        goActv(ActivityProducto.class, true);
       }
     } else {
       showMaterialDialog(getString(R.string.datos_invaldiso), new onClickCallback() {

@@ -22,6 +22,14 @@
     <activity android:name=".ActivityActualizarUsuario">
     </activity>
     <activity
+        android:name=".ActivityProducto"
+        android:screenOrientation="landscape"
+        >
+
+    </activity>
+    <activity android:name=".ActivityCrearProducto">
+    </activity>
+    <activity
         android:name=".ActivityCrearUsuario"
         android:label="@string/title_activity_main2"
         android:theme="@style/AppTheme">

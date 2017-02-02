@@ -2,6 +2,7 @@ package quipux.com.co.testappmike;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import io.realm.RealmResults;
 import java.util.ArrayList;
 import quipux.com.co.testappmike.adapter.AdapterUsuario;
 import quipux.com.co.testappmike.base.BaseActivity;
+import quipux.com.co.testappmike.base.onClickCallback;
 import quipux.com.co.testappmike.entity.Usuario;
 
 public class ActivityAdmin extends BaseActivity {
@@ -21,6 +23,7 @@ public class ActivityAdmin extends BaseActivity {
   @BindView(R.id.fab) FloatingActionButton fab;
   @BindView(R.id.rv_usuarios) RecyclerView rvUsuarios;
   private AdapterUsuario adapter;
+  private final Handler handler = new Handler();
 
   @Override public int layoutId() {
     return R.layout.activity_main_admin;
@@ -58,6 +61,22 @@ public class ActivityAdmin extends BaseActivity {
         Intent intent = new Intent(this, ActivityActualizarUsuario.class);
         intent.putExtra(KEY_DATA_USER, listUsuarios.get(integer).toString());
         goActv(intent, false);
+      });
+      adapter.getClickDelete().subscribe(u -> {
+        showMaterialDialog("Deseas eliminar el usuario " + u.getNombre(), new onClickCallback() {
+          @Override public void onPositive(boolean result) {
+            elimiarUsuario(u);
+            handler.postDelayed(() -> initList(), 500);
+          }
+
+          @Override public void onDissmis() {
+            // call super
+          }
+
+          @Override public void onNegative(boolean result) {
+            // call super
+          }
+        });
       });
     }
   }

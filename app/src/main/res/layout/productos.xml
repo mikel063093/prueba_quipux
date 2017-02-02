@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+  <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+
+  </android.support.design.widget.AppBarLayout>
+
+  <de.codecrafters.tableview.TableView
+      xmlns:table="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/tableView"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      table:tableView_columnCount="4"
+      />
+
+
+  <android.support.design.widget.FloatingActionButton
+      android:id="@+id/fab"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="bottom|end"
+      android:layout_margin="10dp"
+      android:theme="@style/MyFloatingButton"
+      app:srcCompat="@drawable/ic_plus_white_24dp"
+      />
+
+</android.support.design.widget.CoordinatorLayout>

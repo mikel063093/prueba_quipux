@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+  <TextView
+      android:text="TextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:id="@+id/txtItem"
+
+      />
+  <ImageView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      android:layout_toRightOf="@+id/txtItem"
+      android:layout_toEndOf="@+id/txtItem"
+      android:id="@+id/btnEdit"
+      android:background="@android:drawable/ic_menu_edit"
+      />
+  <ImageView
+      android:text="D"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      android:layout_toRightOf="@+id/btnEdit"
+      android:layout_toEndOf="@+id/btnEdit"
+      android:layout_marginLeft="10dp"
+      android:layout_marginStart="10dp"
+      android:id="@+id/btnDelete"
+      android:background="@android:drawable/ic_menu_delete"
+
+
+      />
+</RelativeLayout>

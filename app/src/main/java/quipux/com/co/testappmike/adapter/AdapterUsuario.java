@@ -4,11 +4,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class AdapterUsuario extends RecyclerView.Adapter<AdapterUsuario.ViewHold
   private Context mContext;
   private ArrayList<Usuario> usuarios;
   private final PublishSubject<Integer> onClickSubject = PublishSubject.create();
+  private final PublishSubject<Usuario> onClickDelete = PublishSubject.create();
 
   public AdapterUsuario(Context mContext, ArrayList<Usuario> usuarios) {
     this.mContext = mContext;
@@ -33,6 +35,10 @@ public class AdapterUsuario extends RecyclerView.Adapter<AdapterUsuario.ViewHold
 
   @NonNull public Observable<Integer> getPositionClicks() {
     return onClickSubject.asObservable();
+  }
+
+  @NonNull public Observable<Usuario> getClickDelete() {
+    return onClickDelete.asObservable();
   }
 
   @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -56,6 +62,8 @@ public class AdapterUsuario extends RecyclerView.Adapter<AdapterUsuario.ViewHold
       holder.rootSection.setOnClickListener(view -> onClickSubject.onNext(position));
       holder.txtNombre.setOnClickListener(view -> onClickSubject.onNext(position));
       holder.txtEstado.setOnClickListener(view -> onClickSubject.onNext(position));
+      assert holder.delete != null;
+      holder.delete.setOnClickListener(view -> onClickDelete.onNext(usuario));
     }
   }
 
@@ -66,7 +74,8 @@ public class AdapterUsuario extends RecyclerView.Adapter<AdapterUsuario.ViewHold
   static class ViewHolder extends RecyclerView.ViewHolder {
     @Nullable @BindView(R.id.txt_estado) AppCompatTextView txtEstado;
     @Nullable @BindView(R.id.txt_nombre) AppCompatTextView txtNombre;
-    @Nullable @BindView(R.id.root_section) CardView rootSection;
+    @Nullable @BindView(R.id.linear) LinearLayout rootSection;
+    @Nullable @BindView(R.id.delete) ImageView delete;
 
     ViewHolder(@NonNull View view) {
       super(view);
