@@ -99,7 +99,7 @@ public class Usuario extends RealmObject {
     try {
       json.put("nombre", getNombre());
       json.put("apellido", getApellido());
-      json.put("correo", getCorreoEletronico());
+      json.put("correoEletronico", getCorreoEletronico());
       json.put("fechaNacimiento", getFechaNacimiento());
       json.put("documento", getDocumento());
       json.put("rol", getRol());

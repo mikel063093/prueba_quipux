@@ -159,6 +159,19 @@
             />
 
       </android.support.design.widget.TextInputLayout>
+      <fr.ganfra.materialspinner.MaterialSpinner
+          android:id="@+id/spinner"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
+          android:visibility="visible"
+          app:ms_alignLabels="false"
+          app:ms_arrowSize="18dp"
+          app:ms_enableErrorLabel="false"
+          app:ms_enableFloatingLabel="false"
+          app:ms_multiline="false"
+          app:ms_thickness="2dp"
+          />
 
       <Button
           android:id="@+id/btn"

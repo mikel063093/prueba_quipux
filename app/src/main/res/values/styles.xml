@@ -20,4 +20,19 @@
   <style name="MyFloatingButton" parent="Theme.AppCompat.Light">
     <item name="colorAccent">@color/primary</item>
   </style>
+
+  <style name="card_white" parent="CardView">
+    <item name="cardCornerRadius">1dp</item>
+    <item name="cardBackgroundColor">@color/white</item>
+    <item name="android:hardwareAccelerated">true</item>
+    <item name="cardUseCompatPadding">true</item>
+
+  </style>
+
+  <style name="txt_taupe" parent="android:Widget.TextView">
+    <item name="android:textColor">@color/primary_text</item>
+    <item name="android:textSize">16sp</item>
+    <item name="android:textStyle">normal</item>
+
+  </style>
 </resources>

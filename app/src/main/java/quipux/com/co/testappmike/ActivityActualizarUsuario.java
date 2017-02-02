@@ -17,7 +17,7 @@ import quipux.com.co.testappmike.base.onClickCallback;
 import quipux.com.co.testappmike.entity.Usuario;
 import quipux.com.co.testappmike.util.UtilUsuario;
 
-public class ActivityCrearUsuario extends BaseActivity {
+public class ActivityActualizarUsuario extends BaseActivity {
 
   @BindView(R.id.toolbar_registro) Toolbar toolbar;
   @BindView(R.id.fullname) EditText fullname;
@@ -36,31 +36,50 @@ public class ActivityCrearUsuario extends BaseActivity {
   @BindView(R.id.documentoWrapper) TextInputLayout documentoWrapper;
   @BindView(R.id.btn) Button btn;
   @BindView(R.id.spinner) MaterialSpinner spinner;
+  String[] ITEMS = { UtilUsuario.ESTADO_ACTIVO, UtilUsuario.ESTADO_INACTIVO };
 
   @Override public int layoutId() {
     return R.layout.nuevo_usuario;
   }
 
-  String[] ITEMS = { UtilUsuario.ESTADO_ACTIVO, UtilUsuario.ESTADO_INACTIVO };
-
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     fechaNacimiento.setManager(getSupportFragmentManager());
     password.setText(generatePin());
-    setupToolbar(toolbar, "Crear usuario", true);
+    password.setEnabled(true);
+    btn.setText("Actualizar");
 
     ArrayAdapter<String> adapter =
-        new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ITEMS);
+        new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, ITEMS);
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     spinner.setAdapter(adapter);
-    spinner.setSelection(0);
+    setupToolbar(toolbar, "Actualizar usuario", true);
+    if (getIntent() != null
+        && getIntent().getExtras() != null
+        && getIntent().getExtras().getString(KEY_DATA_USER) != null) {
+      String json = getIntent().getExtras().getString(KEY_DATA_USER);
+      Usuario usuario = AppMain.getGson().fromJson(json, Usuario.class);
+      if (usuario != null) {
+        fullname.setText(usuario.getNombre());
+        String apellido = usuario.getApellido() != null
+            && usuario.getApellido().length() > 0
+            && !usuario.getApellido().equalsIgnoreCase("null") ? usuario.getApellido() : "";
+        lastName.setText(apellido);
+        email.setText(usuario.getCorreoEletronico());
+        fechaNacimiento.setText(usuario.getFechaNacimiento());
+        documento.setText(usuario.getDocumento() + "");
+        user.setText(usuario.getUsuario());
+        password.setText(usuario.getContrasena());
+        int position = usuario.getEstado().equalsIgnoreCase(UtilUsuario.ESTADO_ACTIVO) ? 0 : 1;
+        spinner.setSelection(position);
+      }
+    }
   }
 
   private boolean isFormValid() {
     boolean allOk = false;
 
-    if (fullname.getText().toString().length() > 0 && validateLength(fullname.getText().toString(),
-        30)) {
+    if (fullname.getText().toString().length() > 0) {
       allOk = true;
       fullnameWrapper.setErrorEnabled(false);
     } else {
@@ -68,16 +87,14 @@ public class ActivityCrearUsuario extends BaseActivity {
       fullnameWrapper.setError("Campo invalido");
       return false;
     }
-    if (lastName.getText().toString().length() > 0 && validateLength(lastName.getText().toString(),
-        30)) {
+    if (lastName.getText().toString().length() > 0) {
       allOk = true;
       lastNamePhoneWrapper.setErrorEnabled(false);
     } else {
       lastNamePhoneWrapper.setError("Campo invalido");
     }
 
-    if (validateEmail(email.getText().toString()) && validateLength(email.getText().toString(),
-        30)) {
+    if (validateEmail(email.getText().toString())) {
       allOk = true;
       emailWrapper.setErrorEnabled(false);
     } else {
@@ -88,8 +105,7 @@ public class ActivityCrearUsuario extends BaseActivity {
     }
 
     if (fechaNacimiento.getText().toString().length() > 0 && validateAge(
-        fechaNacimiento.getText().toString()) && validateLength(
-        fechaNacimiento.getText().toString(), 30)) {
+        fechaNacimiento.getText().toString())) {
       allOk = true;
       fechaWrapper.setErrorEnabled(false);
     } else {
@@ -98,8 +114,7 @@ public class ActivityCrearUsuario extends BaseActivity {
       return false;
     }
 
-    if (validateNumbers(documento.getText().toString()) && validateLength(
-        documento.getText().toString(), 30)) {
+    if (validateNumbers(documento.getText().toString())) {
       allOk = true;
       documentoWrapper.setErrorEnabled(false);
     } else {
@@ -108,7 +123,7 @@ public class ActivityCrearUsuario extends BaseActivity {
       return false;
     }
 
-    if (user.getText().toString().length() > 0 && validateLength(user.getText().toString(),30)) {
+    if (user.getText().toString().length() > 0) {
       allOk = true;
       userWrapper.setErrorEnabled(false);
     } else {
@@ -121,7 +136,7 @@ public class ActivityCrearUsuario extends BaseActivity {
 
   @OnClick(R.id.btn) public void onClick() {
     log("save");
-    log("status form" + isFormValid());
+
     if (isFormValid()) {
       log("user datos ok");
 
@@ -138,14 +153,13 @@ public class ActivityCrearUsuario extends BaseActivity {
         usuario.setContrasena(password.getText().toString());
         usuario.setUsuario(user.getText().toString());
         usuario.setCorreoEletronico(email.getText().toString());
-
         usuario.setRol(UtilUsuario.ROL_USURIO);
         String element = ITEMS[spinner.getSelectedItemPosition()];
         usuario.setEstado(element);
 
         realm1.copyToRealmOrUpdate(usuario);
         showMaterialDialog(
-            getString(R.string.succes_user, usuario.getNombre(), usuario.getContrasena()),
+            getString(R.string.succes_update_user, usuario.getNombre(), usuario.getContrasena()),
             new onClickCallback() {
               @Override public void onPositive(boolean result) {
                 // call super

@@ -3,7 +3,7 @@
   <string name="Ingresar">Ingresar</string>
   <string name="correo">Correo electronico</string>
   <string name="contraseña">Contraseña</string>
-  <string name="usuario">Usuario</string>
+  <string name="usuario">Usuario o correo electronico</string>
   <string name="acept">Aceptar</string>
   <string name="cancel">Cancelar</string>
   <string name="datos_invaldiso">Datos erroneos</string>
@@ -13,4 +13,9 @@
   <string name="apellido">Apellido</string>
   <string name="fecha_nacimiento">Fecha de nacimiento</string>
   <string name="numero_documento_identidiad">Numero documento</string>
+  <string name="succes_user">Usuario %1$s creado, contraseña %2$s</string>
+  <string name="succes_update_user">Usuario %1$s actualizado, contraseña %2$s</string>
+  <string name="state_user">%1$s - %2$s</string>
+  <string name="descriptiongeneral">Descripcion</string>
+
 </resources>

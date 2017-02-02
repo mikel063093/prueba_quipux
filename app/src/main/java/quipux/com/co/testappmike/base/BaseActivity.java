@@ -5,14 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 import butterknife.ButterKnife;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.orhanobut.logger.Logger;
 import io.realm.Realm;
-import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,6 +41,8 @@ public abstract class BaseActivity extends AppCompatActivity {
   private Pattern pattern = Pattern.compile(EMAIL_PATTERN);
   private Pattern patternName = Pattern.compile(NAME_PATTERN);
   private Pattern patternNumber = Pattern.compile(NUMBER_PATTERN);
+
+  public static final String KEY_DATA_USER = "usuario";
 
   public abstract int layoutId();
 
@@ -263,5 +270,88 @@ public abstract class BaseActivity extends AppCompatActivity {
 
   public boolean validatePassword(@NonNull String password) {
     return password.length() >= 4;
+  }
+
+  public void setupToolbar(Toolbar toolbar, String title, boolean showBack) {
+    setSupportActionBar(toolbar);
+
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayShowTitleEnabled(false);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(showBack);
+      getSupportActionBar().setDisplayShowHomeEnabled(showBack);
+      TextView txtTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+      txtTitle.setText(title != null ? title : "TestApp");
+    }
+  }
+
+  public void setupToolbar(Toolbar toolbar, String title) {
+    setSupportActionBar(toolbar);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setDisplayShowTitleEnabled(false);
+      TextView txtTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
+      txtTitle.setText(title != null ? title : "TestApp");
+    }
+  }
+
+  public boolean isAdult(Date date) {
+
+    int years = 0;
+    int months = 0;
+    int days = 0;
+    //create calendar object for birth day
+    Calendar birthDay = Calendar.getInstance();
+    birthDay.setTimeInMillis(date.getTime());
+    //create calendar object for current day
+    long currentTime = System.currentTimeMillis();
+    Calendar now = Calendar.getInstance();
+    now.setTimeInMillis(currentTime);
+    //Get difference between years
+    years = now.get(Calendar.YEAR) - birthDay.get(Calendar.YEAR);
+    int currMonth = now.get(Calendar.MONTH) + 1;
+    int birthMonth = birthDay.get(Calendar.MONTH) + 1;
+    //Get difference between months
+    months = currMonth - birthMonth;
+    //if month difference is in negative then reduce years by one and calculate the number of months.
+    if (months < 0) {
+      years--;
+      months = 12 - birthMonth + currMonth;
+      if (now.get(Calendar.DATE) < birthDay.get(Calendar.DATE)) months--;
+    } else if (months == 0 && now.get(Calendar.DATE) < birthDay.get(Calendar.DATE)) {
+      years--;
+      months = 11;
+    }
+    //Calculate the days
+    if (now.get(Calendar.DATE) > birthDay.get(Calendar.DATE)) {
+      days = now.get(Calendar.DATE) - birthDay.get(Calendar.DATE);
+    } else if (now.get(Calendar.DATE) < birthDay.get(Calendar.DATE)) {
+      int today = now.get(Calendar.DAY_OF_MONTH);
+      now.add(Calendar.MONTH, -1);
+      days =
+          now.getActualMaximum(Calendar.DAY_OF_MONTH) - birthDay.get(Calendar.DAY_OF_MONTH) + today;
+    } else {
+      days = 0;
+      if (months == 12) {
+        years++;
+        months = 0;
+      }
+    }
+    log("edad" + years);
+    return years >= 18;
+  }
+
+  public boolean validateAge(String dateFormat) {
+
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    try {
+      Date birthDate = sdf.parse(dateFormat);
+      return isAdult(birthDate);
+    } catch (ParseException e) {
+      Logger.e(e.getMessage(), e);
+      return false;
+    }
+  }
+
+  public boolean validateLength(String text, int max) {
+    return text != null && text.length() <= max;
   }
 }

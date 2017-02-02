@@ -2,10 +2,16 @@ package quipux.com.co.testappmike;
 
 import android.app.Application;
 import android.os.Looper;
+import android.support.annotation.NonNull;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmObject;
 import quipux.com.co.testappmike.entity.Usuario;
 import quipux.com.co.testappmike.util.UtilUsuario;
 
@@ -14,6 +20,17 @@ import quipux.com.co.testappmike.util.UtilUsuario;
  */
 
 public class AppMain extends Application {
+  private static GsonBuilder gsonBuilder = new GsonBuilder();
+  private static Gson gson = gsonBuilder.setExclusionStrategies(new ExclusionStrategy() {
+    @Override public boolean shouldSkipField(@NonNull FieldAttributes f) {
+      return f.getDeclaringClass().equals(RealmObject.class);
+    }
+
+    @Override public boolean shouldSkipClass(Class<?> clazz) {
+      return false;
+    }
+  }).create();
+
   @Override public void onCreate() {
     super.onCreate();
     Logger.init("TestApp")
@@ -26,6 +43,10 @@ public class AppMain extends Application {
     RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
     Realm.setDefaultConfiguration(realmConfiguration);
     crearAdmin();
+  }
+
+  public static Gson getGson() {
+    return gson;
   }
 
   private void crearAdmin() {
